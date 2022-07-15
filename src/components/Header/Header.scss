@@ -1,0 +1,17 @@
+@import "@/components/config.scss";
+
+.header{
+  z-index: 10;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 50px;
+  display: grid;
+  grid-template-columns: 100%;
+  align-items: start;
+  justify-content: stretch;
+  background: $bg-header-color;
+  color: white;
+
+}

@@ -7,18 +7,14 @@ npm install
 
 ### Compiles and hot-reloads for development
 ```
-npm run serve
+npm run dev
+```
+### for connect db
+```
+json-server --watch ./db/db.json
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
 
-### Lints and fixes files
-```
-npm run lint
-```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+15.07.2022 -- added firebase/auth
+-->del json-serve, firebase

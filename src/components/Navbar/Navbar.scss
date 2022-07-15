@@ -1,0 +1,40 @@
+@import "@/components/config.scss";
+.nav{
+  padding: 0;
+}
+
+.nav li{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  list-style-type: none;
+  padding: 2rem 0;
+}
+.nav li a{
+  font-size: 1.2rem;
+  color: #2c3150;
+  text-decoration: none;
+  cursor: pointer;
+  height: 100%;
+}
+@keyframes bubble{
+from {
+  background: $bg-text-active;
+  padding: 50% 0;
+  margin: -50% 0;
+}
+to {
+  background: $bg-text-active;
+  padding:0;
+  margin: 0;
+}
+}
+.nav li .router-link-exact-active{
+  animation-name:bubble;
+  animation-duration: 1s;
+  background: $bg-text-active;
+  color: $text-color-active;
+}
+.nav li:hover a{
+  color: $text-color-active;
+}
