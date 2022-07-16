@@ -23,14 +23,17 @@ const router = new Router({
     routes: routers, // short for `routes: routes`
 })
 router.beforeEach((to,from,next)=>{
-if(to.path ==='/Login' && auth.currentUser || to.path ==='/Registration' && auth.currentUser) {
-    next('/')
-    return;
-}
+
+
 if(to.matched.some(record =>record.meta.requiresAuth) && !auth.currentUser) {
     next('/Login')
     return;
 }
+if(to.matched.some(record =>record.meta.requiresAuth) && !auth.currentUser) {
+    next('/Registration')
+    return;
+}
+
 next()
 })
 export default router

@@ -83,9 +83,6 @@ export default new Vuex.Store({
                         commit('CLEAR_USER')
                     }else{
                         commit('SET_USER')
-                        if(router.isReady && router.currentRoute.value.path === '/Login') {
-                            router.push('/')
-                        }
                     }
                 })
             }
@@ -105,14 +102,17 @@ export default new Vuex.Store({
             },
             SET_USER(state,user){
                 state.user=user
+                state.userConnect=auth.currentUser
             },
             CLEAR_USER(state){
                 state.user=null
+                state.userConnect=auth.currentUser
             },
         },
 
         state: {
             user:null,
+            userConnect:false,
             profile: {},
             tasks:[],
             works:[]

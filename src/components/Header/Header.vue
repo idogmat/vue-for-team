@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <div v-if="$store.state.user != null">
+    <div v-if="correctShow">
     <p>{{$store.state.user.email}}</p>
     <button @click.prevent="signOut">SingOut</button>
     </div>
@@ -9,15 +9,15 @@
 
 <script>
 import { mapActions,mapGetters} from "vuex";
+//import {getAuth,onAuthStateChanged,signOut} from "fierbase/auth";
+
 export default {
   name: "HeaderBlock",
-  data(){
-    return{
-      show:this.$store.state.user
-    }
-  },
   computed:{
-    ...mapGetters['getUser']
+    ...mapGetters['getUser'],
+    correctShow(){
+     return this.$store.state.user != null
+    }
 
   },
   methods:{
@@ -28,10 +28,6 @@ export default {
       }
     }
   },
-  async beforeMount() {
-    this.$store.dispatch('fetchUser')
-    console.log('k')
-  }
 }
 </script>
 
