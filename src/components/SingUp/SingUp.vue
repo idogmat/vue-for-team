@@ -2,10 +2,10 @@
   <div>
     <h1>Create Account</h1>
     <p>
-      <input type="text" placeholder="Email" v-model="email">
+      <input type="text" placeholder="Email" v-model="user.email">
     </p>
     <p>
-      <input type="password" placeholder="Password" v-model="password">
+      <input type="password" placeholder="Password" v-model="user.password">
     </p>
     <p>
       <button @click="register">singUp</button>
@@ -14,26 +14,31 @@
 </template>
 
 <script>
-import {getAuth,createUserWithEmailAndPassword} from "firebase/auth"
+//import {getAuth,createUserWithEmailAndPassword} from "firebase/auth"
 export default {
   name: "SingUp",
   data(){
     return{
-      email:"",
-      password:""
+      user: {
+        email: "",
+        password: ""
+      }
     }
   },
   methods:{
     register(){
-      createUserWithEmailAndPassword(getAuth(),this.email,this.password)
-          .then((res)=>{
-            this.$router.push("/")
-            console.log("SingUp completed",res)
-          })
-          .catch((error)=>{
-            console.log("SingUp fail" ,error)
-          })
-    }
+      this.$store.dispatch('login',this.user)
+    },
+    // register(){
+    //   createUserWithEmailAndPassword(getAuth(),this.email,this.password)
+    //       .then((res)=>{
+    //         this.$router.push("/")
+    //         console.log("SingUp completed",res)
+    //       })
+    //       .catch((error)=>{
+    //         console.log("SingUp fail" ,error)
+    //       })
+    // }
   }
 }
 </script>

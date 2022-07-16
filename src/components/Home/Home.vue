@@ -1,13 +1,13 @@
 
 <template>
-  <div :key="getUser.id">
-    <h1>Name of our young Coder: {{ getUser.name }}</h1>
-    <p>urLevel: {{ getUser.lvl}}</p>
+  <div :key="getProfile.id">
+    <h1>Name of our young Coder: {{ getProfile.name }}</h1>
+    <p>urLevel: {{ getProfile.lvl}}</p>
     <div>urSkills:</div>
-    <ul v-for="el in getUser.skills" :key="el">
+    <ul v-for="el in getProfile.skills" :key="el">
       <li>{{ el }}</li>
     </ul>
-    <img :src="getUser.photo" alt="user.photo">
+    <img :src="getProfile.photo" alt="user.photo">
   </div>
 <!--  <div v-else>чет в гет не отработал,это твоя вина</div>-->
 </template>
@@ -19,10 +19,10 @@ export default {
   props: {
 
   },
-  computed: mapGetters(["getUser"]),
-  methods: mapActions(["fetchUser"]),
+  computed: mapGetters(["getProfile"]),
+  methods: mapActions(["fetchProfile"]),
   async mounted() {
-    this.fetchUser();
+    this.fetchProfile();
   }
 }
 </script>
