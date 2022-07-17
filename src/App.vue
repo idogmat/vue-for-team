@@ -17,13 +17,11 @@
 
 import Navbar from "@/components/Navbar/Navbar";
 import Header from "@/components/Header/Header";
-
 export default {
   name: 'App',
   components:{
     Navbar,Header
   },
-
 }
 </script>
 

@@ -6,7 +6,7 @@ import {createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     signOut
 } from "firebase/auth"
-//import user from './modules/user';
+// import axios from 'axios'
 Vue.use(Vuex);
 export default new Vuex.Store({
         actions: {
@@ -24,22 +24,23 @@ export default new Vuex.Store({
                     'http://localhost:3000/Tasks'
                 )
                 const tasks = await res.json()
-                //console.log(tasks);
-                commit('tasksReducer', tasks)
+                console.log(res);
+                commit('tasksReducer', tasks[0].Tasks)
             },
             async fetchWorks({commit}) {
                 const res = await fetch(
                     'http://localhost:3000/Works'
                 )
                 const works = await res.json()
-                console.log(works);
-                commit('worksReducer', works)
+                console.log(works[0].Works);
+                commit('worksReducer', works[0].Works)
             },
             //register/auth
             async login({commit},details){
                 const {email,password} = details
                 try{
-                    await signInWithEmailAndPassword(auth,email,password)
+                   const user = await signInWithEmailAndPassword(auth,email,password)
+                    console.log(user)
                 }catch (error) {
                     switch (error.code){
                         case 'auth/user-not-found':
@@ -55,12 +56,17 @@ export default new Vuex.Store({
                 }
                 commit('SET_USER',auth.currentUser)
                 console.log(auth)
-                router.push('/')
+                   router.push('/')
             },
             async logOut({commit}){
-                await signOut(auth)
-                commit('CLEAR_USER')
-                router.push('/Login')
+                try {
+                    await signOut(auth)
+                    commit('CLEAR_USER')
+                    router.push('/Login')
+                } catch (error) {
+                    alert(error)
+                }
+
             },
             async register({commit},details){
                 const {email,password} = details
@@ -82,7 +88,7 @@ export default new Vuex.Store({
                     if(user === null){
                         commit('CLEAR_USER')
                     }else{
-                        commit('SET_USER')
+                        commit('SET_USER',auth.currentUser)
                     }
                 })
             }
@@ -101,17 +107,25 @@ export default new Vuex.Store({
                 state.works = works
             },
             SET_USER(state,user){
-                state.user=user
-                state.userConnect=auth.currentUser
+                state.user.data=user
+                state.user.loggedIn=true
             },
+            // SET_LOGGED_IN(state,value){
+            //     state.user.loggedIn = value;
+            // },
             CLEAR_USER(state){
-                state.user=null
-                state.userConnect=auth.currentUser
+                console.log(state.user)
+                state.user.data = null
+                state.user.loggedIn=false
             },
         },
 
         state: {
-            user:null,
+            user:{
+                loggedIn:false,
+                auth:"",
+                data:null
+            },
             userConnect:false,
             profile: {},
             tasks:[],
