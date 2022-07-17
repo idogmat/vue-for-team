@@ -1,7 +1,7 @@
 <template>
   <div class="header">
     <div v-if="correctShow">
-    <p>{{$store.state.user.email}}</p>
+    <p>{{$store.state.user.data.email}}</p>
     <button @click.prevent="signOut">SingOut</button>
     </div>
   </div>
@@ -16,14 +16,14 @@ export default {
   computed:{
     ...mapGetters['getUser'],
     correctShow(){
-     return this.$store.state.user != null
+     return this.$store.state.user.loggedIn
     }
 
   },
   methods:{
     ...mapActions['fetchUser','logOut'],
     signOut() {
-      if (this.$store.state.user !== null) {
+      if (this.$store.state.user.loggedIn) {
         this.$store.dispatch('logOut')
       }
     }

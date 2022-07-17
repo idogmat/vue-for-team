@@ -33,7 +33,7 @@ export default {
   },
   computed:{
     resAuthUser(){
-     return this.$store.state.userConnect
+     return this.$store.state.user.loggedIn
     }
   }
 }
