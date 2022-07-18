@@ -1,7 +1,7 @@
 <template>
   <div class="header">
-    <div v-if="correctShow">
-    <p>{{$store.state.user.data.email}}</p>
+    <div v-show="logCheck">
+    <p>ok</p>
     <button @click.prevent="signOut">SingOut</button>
     </div>
   </div>
@@ -9,25 +9,42 @@
 
 <script>
 import { mapActions,mapGetters} from "vuex";
-//import {getAuth,onAuthStateChanged,signOut} from "fierbase/auth";
+import {auth} from "@/fierbase";
 
 export default {
   name: "HeaderBlock",
+  data(){
+    return {
+      isLoggedIn: false
+    }
+  },
   computed:{
     ...mapGetters['getUser'],
-    correctShow(){
-     return this.$store.state.user.loggedIn
+    logCheck(){
+      let res
+      if (this.isLoggedIn) {
+        res = true;
+      } else {
+        res = false;
+      }
+      return res
     }
-
   },
   methods:{
-    ...mapActions['fetchUser','logOut'],
+    ...mapActions['logOut'],
     signOut() {
-      if (this.$store.state.user.loggedIn) {
+      if (this.isLoggedIn) {
+        this.isLoggedIn = false
         this.$store.dispatch('logOut')
       }
+    },
+
+    },
+    created() {
+      if (auth.currentUser) {
+        this.isLoggedIn = true;
+      }
     }
-  },
 }
 </script>
 
