@@ -22,18 +22,36 @@ const router = new Router({
     mode: 'history',
     routes: routers, // short for `routes: routes`
 })
-router.beforeEach((to,from,next)=>{
 
 
-if(to.matched.some(record =>record.meta.requiresAuth) && !auth.currentUser) {
-    next('/Login')
-    return;
-}
-if(to.matched.some(record =>record.meta.requiresAuth) && !auth.currentUser) {
-    next('/Registration')
-    return;
-}
 
-next()
-})
+    router.beforeEach((to, from, next) => {
+        // Check for requiresAuth guard
+        if (to.matched.some(record => record.meta.requiresAuth)) {
+            // Check if NO logged user
+            if (!auth.currentUser) {
+                // Go to login
+                next({
+                    path: '/login',
+                });
+            } else {
+                // Proceed to route
+                next();
+            }
+        } else if (to.matched.some(record => record.meta.requiresGuest)) {
+            // Check if NO logged user
+            if (auth.currentUser) {
+                // Go to login
+                next({
+                    path: '/',
+                });
+            } else {
+                // Proceed to route
+                next();
+            }
+        } else {
+            // Proceed to route
+            next();
+        }
+    });
 export default router

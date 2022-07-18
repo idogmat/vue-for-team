@@ -24,16 +24,24 @@
 
 <script>
 import {routers} from "@/router/routes"
+import {auth} from "@/fierbase";
 export default {
   name: "NavBar",
   data(){
     return{
-      routers
+      routers,
+      isLoggedIn:false
     }
   },
   computed:{
     resAuthUser(){
-     return this.$store.state.user.loggedIn
+     return this.isLoggedIn
+    }
+  },
+  created() {
+    if (auth.currentUser) {
+      console.log(auth.currentUser)
+      this.isLoggedIn = true;
     }
   }
 }

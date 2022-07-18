@@ -114,7 +114,6 @@ export default new Vuex.Store({
             //     state.user.loggedIn = value;
             // },
             CLEAR_USER(state){
-                console.log(state.user)
                 state.user.data = null
                 state.user.loggedIn=false
             },
@@ -122,8 +121,7 @@ export default new Vuex.Store({
 
         state: {
             user:{
-                loggedIn:false,
-                auth:"",
+                loggedIn:null,
                 data:null
             },
             userConnect:false,
