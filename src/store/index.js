@@ -32,7 +32,7 @@ export default new Vuex.Store({
                     'http://localhost:3000/Works'
                 )
                 const works = await res.json()
-                console.log(works[0].Works);
+                //console.log(works[0].Works);
                 commit('worksReducer', works[0].Works)
             },
             //register/auth
@@ -55,14 +55,14 @@ export default new Vuex.Store({
                     return
                 }
                 commit('SET_USER',auth.currentUser)
-                console.log(auth)
-                   router.push('/')
+                //console.log(auth)
+                   router.push('/').catch(()=>{});
             },
             async logOut({commit}){
                 try {
                     await signOut(auth)
                     commit('CLEAR_USER')
-                    router.push('/Login')
+                    router.push('/Login').catch(()=>{});
                 } catch (error) {
                     alert(error)
                 }
@@ -74,14 +74,13 @@ export default new Vuex.Store({
                     await createUserWithEmailAndPassword(auth,email,password)
                 }catch (error) {
                     switch (error.code){
-
                         default:
                             alert("something wrong")
                     }
                     return
                 }
                 commit('SET_USER',auth.currentUser)
-                router.push('/')
+                router.push('/').catch(()=>{});
             },
             fetchUser({commit}){
                 auth.onAuthStateChanged(async user =>{
@@ -89,6 +88,7 @@ export default new Vuex.Store({
                         commit('CLEAR_USER')
                     }else{
                         commit('SET_USER',auth.currentUser)
+                        router.push('/').catch(()=>{});
                     }
                 })
             }
@@ -110,9 +110,9 @@ export default new Vuex.Store({
                 state.user.data=user
                 state.user.loggedIn=true
             },
-            // SET_LOGGED_IN(state,value){
-            //     state.user.loggedIn = value;
-            // },
+             SET_LOGGED_IN(state,value){
+             state.user.loggedIn = value;
+            },
             CLEAR_USER(state){
                 state.user.data = null
                 state.user.loggedIn=false
@@ -121,7 +121,7 @@ export default new Vuex.Store({
 
         state: {
             user:{
-                loggedIn:null,
+                loggedIn:false,
                 data:null
             },
             userConnect:false,

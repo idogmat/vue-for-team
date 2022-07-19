@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <div v-show="logCheck">
+    <div v-if="this.$store.state.user.loggedIn">
     <p>ok</p>
     <button @click.prevent="signOut">SingOut</button>
     </div>
@@ -9,41 +9,22 @@
 
 <script>
 import { mapActions,mapGetters} from "vuex";
-import {auth} from "@/fierbase";
+// import {auth} from "@/fierbase";s
 
 export default {
   name: "HeaderBlock",
-  data(){
-    return {
-      isLoggedIn: false
-    }
-  },
   computed:{
     ...mapGetters['getUser'],
-    logCheck(){
-      let res
-      if (this.isLoggedIn) {
-        res = true;
-      } else {
-        res = false;
-      }
-      return res
-    }
+
   },
   methods:{
     ...mapActions['logOut'],
     signOut() {
-      if (this.isLoggedIn) {
-        this.isLoggedIn = false
+      if (this.$store.state.user.loggedIn) {
         this.$store.dispatch('logOut')
       }
     },
 
-    },
-    created() {
-      if (auth.currentUser) {
-        this.isLoggedIn = true;
-      }
     }
 }
 </script>
