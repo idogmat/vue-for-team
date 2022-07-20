@@ -1,13 +1,13 @@
 
 <template>
-  <div :key="getProfile.id">
-    <h1>Name of our young Coder: {{ getProfile.name }}</h1>
-    <p>urLevel: {{ getProfile.lvl}}</p>
+  <div >
+    <h1>Name of our young Coder: {{ this.$store.state.profile.profile.name }}</h1>
+    <p>urLevel: {{ this.$store.state.profile.profile.lvl}}</p>
     <div>urSkills:</div>
-    <ul v-for="el in getProfile.skills" :key="el">
+    <ul v-for="el in this.$store.state.profile.profile.skills" :key="el">
       <li>{{ el }}</li>
     </ul>
-    <img :src="getProfile.photo" alt="user.photo">
+    <img :src="this.$store.state.profile.profile.photo" alt="user.photo">
   </div>
 <!--  <div v-else>чет в гет не отработал,это твоя вина</div>-->
 </template>
@@ -21,8 +21,8 @@ export default {
   },
   computed: mapGetters(["getProfile"]),
   methods: mapActions(["fetchProfile"]),
-  async mounted() {
-    this.fetchProfile();
+  async created() {
+    await this.$store.dispatch('fetchProfile')
   }
 }
 </script>

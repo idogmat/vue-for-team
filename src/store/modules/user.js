@@ -7,7 +7,8 @@ export default {
         async login({commit},details){
             const {email,password} = details
             try{
-                await signInWithEmailAndPassword(auth,email,password)
+                const user = await signInWithEmailAndPassword(auth,email,password)
+                console.log(user)
             }catch (error) {
                 switch (error.code){
                     case 'auth/user-not-found':
@@ -22,13 +23,18 @@ export default {
                 return
             }
             commit('SET_USER',auth.currentUser)
-            console.log(auth)
-            router.push('/')
+            //console.log(auth)
+            router.push('/').catch(()=>{});
         },
         async logOut({commit}){
-            await signOut(auth)
-            commit('CLEAR_USER')
-            router.push('/Login')
+            try {
+                await signOut(auth)
+                commit('CLEAR_USER')
+                router.push('/Login').catch(()=>{});
+            } catch (error) {
+                alert(error)
+            }
+
         },
         async register({commit},details){
             const {email,password} = details
@@ -36,38 +42,43 @@ export default {
                 await createUserWithEmailAndPassword(auth,email,password)
             }catch (error) {
                 switch (error.code){
-
                     default:
                         alert("something wrong")
                 }
                 return
             }
             commit('SET_USER',auth.currentUser)
-            router.push('/')
+            router.push('/').catch(()=>{});
         },
         fetchUser({commit}){
             auth.onAuthStateChanged(async user =>{
                 if(user === null){
                     commit('CLEAR_USER')
                 }else{
-                    commit('SET_USER')
-                    if(router.isReady && router.currentRoute.value.path === '/Login') {
-                        router.push('/')
-                    }
+                    commit('SET_USER',auth.currentUser)
+                    router.push('/').catch(()=>{});
                 }
             })
         }
     },
     mutations: {
         SET_USER(state,user){
-            state.user=user
+            state.user.data=user
+            state.user.loggedIn=true
+        },
+        SET_LOGGED_IN(state,value){
+            state.user.loggedIn = value;
         },
         CLEAR_USER(state){
-            state.user=null
-        }
+            state.user.data = null
+            state.user.loggedIn=false
+        },
     },
     state: {
-        user:null
+        user:{
+            loggedIn:false,
+            data:null
+        },
     },
     getters: {
         getUser(state) {

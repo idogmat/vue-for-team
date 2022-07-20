@@ -1,6 +1,6 @@
 <template>
   <div>
-  <div v-for="task in getTasks" :key="task.id">
+  <div v-for="task in this.$store.state.tasks.tasks" :key="task.id">
     <h1>Task title: {{ task.name }}</h1>
     <p>text: {{ task.body}}</p>
     <img :src="task.img" alt="task.photo">
@@ -17,7 +17,7 @@ export default {
   computed: mapGetters(["getTasks"]),
   methods: mapActions(["fetchTasks"]),
   async mounted() {
-    this.fetchTasks();
+    await this.$store.dispatch('fetchTasks');
   }
 }
 </script>

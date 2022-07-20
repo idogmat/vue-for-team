@@ -1,24 +1,26 @@
 
 <template>
+
   <ul class="nav">
     <li>
-      <router-link v-if="this.$store.state.user.loggedIn" class-active="active" to="/"> Home </router-link>
+      <router-link v-if="this.$store.state.user.user.loggedIn" class-active="active" to="/"> Home </router-link>
     </li>
     <li>
-      <router-link v-if="this.$store.state.user.loggedIn" class-active="active" to="/learn"> Learn </router-link>
+      <router-link v-if="this.$store.state.user.user.loggedIn" class-active="active" to="/learn"> Learn </router-link>
     </li>
     <li>
-      <router-link v-if="this.$store.state.user.loggedIn" class-active="active" to="/Works"> Works </router-link>
+      <router-link v-if="this.$store.state.user.user.loggedIn" class-active="active" to="/Works"> Works </router-link>
     </li>
     <li>
-      <router-link v-if="this.$store.state.user.loggedIn" class-active="active" to="/Tasks"> Tasks </router-link>
+      <router-link v-if="this.$store.state.user.user.loggedIn" class-active="active" to="/Tasks"> Tasks </router-link>
     </li>
     <li>
-      <router-link v-if="!this.$store.state.user.loggedIn" class-active="active" to="/Registration">Registration</router-link>
+      <router-link v-if="!this.$store.state.user.user.loggedIn" class-active="active" to="/Registration">Registration</router-link>
     </li>
     <li>
-      <router-link v-if="!this.$store.state.user.loggedIn" class-active="active" to="/Login">Login</router-link>
+      <router-link v-if="!this.$store.state.user.user.loggedIn" class-active="active" to="/Login">Login</router-link>
     </li>
+
   </ul>
 </template>
 
@@ -33,8 +35,8 @@ export default {
       routers,
     }
   },
-  computed:{
-    ...mapGetters['getUser'],
+  computed: {
+    ...mapGetters['getUser']
   },
 }
 </script>
