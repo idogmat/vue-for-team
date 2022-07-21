@@ -40,6 +40,7 @@ export default {
             const {email,password} = details
             try{
                 await createUserWithEmailAndPassword(auth,email,password)
+                router.push('/').catch(()=>{});
             }catch (error) {
                 switch (error.code){
                     default:

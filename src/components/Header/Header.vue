@@ -20,7 +20,7 @@ export default {
   methods:{
     ...mapActions['logOut'],
     signOut() {
-      if (this.$store.state.user.loggedIn) {
+      if (this.$store.state.user.user.loggedIn) {
         this.$store.dispatch('logOut')
       }
     },

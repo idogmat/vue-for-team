@@ -15,6 +15,8 @@
 
 <script>
 //import {getAuth,createUserWithEmailAndPassword} from "firebase/auth"
+//import {mapActions} from "vuex";
+
 export default {
   name: "SingUp",
   data(){
@@ -27,7 +29,7 @@ export default {
   },
   methods:{
     register(){
-      this.$store.dispatch('login',this.user)
+      this.$store.dispatch('register',this.user)
     },
     // register(){
     //   createUserWithEmailAndPassword(getAuth(),this.email,this.password)
